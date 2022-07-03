@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, mergeMap, Observable, of, tap } from 'rxjs';
 import { endpoints } from '../endpoints';
+import { CreatedUser } from '../models/user.model';
 import { CacheService } from './cache.service';
 
 @Injectable({
@@ -18,8 +19,8 @@ export class UserService {
       return of(cachedUserId);
     }
 
-    return this.http.get(endpoints.USER).pipe(
-      map((response: any) => response.id),
+    return this.http.post<CreatedUser>(endpoints.USER, null).pipe(
+      map(response => response._id),
       tap((id: string) => this.cache.set(this.USER_ID_KEY, id))
     );
   }

@@ -33,7 +33,7 @@ describe('UserService', () => {
       spyOn(cacheService, 'get').and.returnValue(null);
       const cacheSet = spyOn(cacheService, 'set');
 
-      const mockBackendResponse = { id: '123-456' };
+      const mockBackendResponse = { _id: '123-456' };
 
       service.getUserId().subscribe({
         next: (value) => {
@@ -46,7 +46,7 @@ describe('UserService', () => {
       });
 
       const req = httpTestingController.expectOne(endpoints.USER);
-      expect(req.request.method).toEqual('GET');
+      expect(req.request.method).toEqual('POST');
       req.flush(mockBackendResponse);
 
       httpTestingController.verify();
